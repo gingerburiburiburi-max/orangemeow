@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open When Letters</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* Main body and general styles */
+        body {
+            font-family: sans-serif;
+            background-color: #fce7f3;
+            color: #4a5568;
+        }
+
+        .dancing-script {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        /* Floating Hearts Animation */
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .heart {
+            position: absolute;
+            bottom: -50px;
+            color: #ef4444; /* red-500 */
+            animation: float linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+       .message-card {
+    width: 100%;
+    height: 150px;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.message-card .card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+    border-radius: 0.75rem;
+}
+
+.message-card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.message-front,
+.message-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    box-sizing: border-box;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.message-front {
+    background: #fff;
+    color: #4a5568;
+}
+
+.message-back {
+    background: #fce7f3;
+    color: #4a5568;
+    transform: rotateY(180deg); /* keeps the text facing upright */
+}
+
+
+        .section-title {
+            background: linear-gradient(to right, #f87171, #ef4444);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .section-title:hover {
+            transform: scale(1.02);
+        }
+
+        .envelope {
+            width: 50px;
+            height: 30px;
+            background-color: #fff;
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+            transform: rotate(180deg);
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+
+        .section-content {
+            transition: all 0.5s ease-out;
+            overflow: hidden;
+            height: auto;
+            opacity: 1;
+        }
+
+        .section-content.hidden {
+            height: 0;
+            opacity: 0;
+            padding: 0 !important;
+        }
+    </style>
+</head>
+<body class="min-h-screen py-10 px-4">
+    <div class="floating-hearts" id="hearts-container"></div>
+
+    <div class="max-w-3xl mx-auto">
+        <div class="text-center mb-12">
+            <h1 class="dancing-script text-5xl md:text-6xl font-bold text-pink-600 mb-4">Happy Birthday, My Love</h1>
+            <p class="text-lg text-gray-600">A collection of messages for every moment we share</p>
+            <div class="mt-6">
+                <div class="w-24 h-1 bg-gradient-to-r from-pink-300 to-red-300 mx-auto rounded-full"></div>
+            </div>
+        </div>
+
+        <div class="section mb-8" id="section-down">
+            <div class="section-title" onclick="toggleSection('down')">
+                <div>
+                    <h2 class="dancing-script text-2xl md:text-3xl font-bold text-white">Open When You're Feeling Down</h2>
+                    <p class="text-white opacity-90">23 reasons to smile again</p>
+                </div>
+                <div class="envelope"></div>
+            </div>
+            <div class="section-content grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-2"></div>
+        </div>
+
+        <div class="section mb-8" id="section-happy">
+            <div class="section-title" onclick="toggleSection('happy')">
+                <div>
+                    <h2 class="dancing-script text-2xl md:text-3xl font-bold text-white">Open When You're Happy</h2>
+                    <p class="text-white opacity-90">23 ways to make our joy multiply</p>
+                </div>
+                <div class="envelope"></div>
+            </div>
+            <div class="section-content grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-2"></div>
+        </div>
+
+        <div class="section mb-8" id="section-miss">
+            <div class="section-title" onclick="toggleSection('miss')">
+                <div>
+                    <h2 class="dancing-script text-2xl md:text-3xl font-bold text-white">Open When You Miss Me</h2>
+                    <p class="text-white opacity-90">23 reminders that I'm always with you</p>
+                </div>
+                <div class="envelope"></div>
+            </div>
+            <div class="section-content grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-2"></div>
+        </div>
+
+        <div class="section mb-8" id="section-love">
+            <div class="section-title" onclick="toggleSection('love')">
+                <div>
+                    <h2 class="dancing-script text-2xl md:text-3xl font-bold text-white">Open When You Need a Reminder of My Love</h2>
+                    <p class="text-white opacity-90">23 declarations of my endless love</p>
+                </div>
+                <div class="envelope"></div>
+            </div>
+            <div class="section-content grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-2"></div>
+        </div>
+
+        <div class="text-center mt-16">
+            <p class="dancing-script text-2xl text-pink-600 mb-2">Forever Yours</p>
+            <div class="w-16 h-1 bg-gradient-to-r from-pink-300 to-red-300 mx-auto rounded-full mb-4"></div>
+            <p class="text-gray-600">Click on any message to reveal its content</p>
+        </div>
+    </div>
+
+    <script>
+        const messages = {
+            down: [
+                "Even on Your hardest days, don’t forget You’re the light in my life (✿◡‿◡).",
+"This rough patch is only one chapter in our amazing love story ^_^.",
+"I wish I could hold You right now and make everything feel okay ผ(•̀_•́ผ).",
+"You’ve faced every obstacle before, and I know You’ll get through this one too UwU.",
+"Your strength inspires me every single day never forget how amazing You are (●'◡'●).",
+"When You feel like You can’t go on, remember You’re my hero (●ˇ∀ˇ●).",
+"The world is brighter because You’re here, and mine feels complete because of You ฅʕ•̫͡•ʔฅ.",
+"Your smile could light up a whole city I can’t wait to see it again (*/ω＼*).",
+"Storms don’t last forever, and I’ll be right here holding Your hand until this one passes (っ´Ι`)っ.",
+"You’ve made me happier than I ever thought possible let me do the same for You 🎀.",
+"Think about our best memory together we’re going to create so many more✨.",
+"I fell in love with Your strength just as much as Your smile ^3^.",
+"It’s okay to have bad days they only make the good ones shine brighter ✧.",
+"My love for You is the one constant I’ll never let go of (*^▽^*).",
+"Close Your eyes and picture my arms around You that’s where you belong 💗.",
+"The way You face tough times is one of the countless reasons I admire You (´▽`ʃ♡ƪ).",
+"You’re never alone I’m with you in every single moment ƪ(˘O˘)ʃ.",
+"This sadness will pass, but my love for You never will 𓏲𝄢.",
+"You’ve given me so much happiness let me help carry Your struggles now ๋࣭ ⭑🦋๋࣭ ⭑.",
+"Your heart is my favorite place to be I hope it feels a little lighter soon (❤ ω ❤).",
+"Remember when we thought we couldn’t be any happier We were always wrong > <.",
+"The sun will shine again, and I’ll be right beside You to enjoy it 💟.",
+"No matter what You’re feeling right now, You’re perfect to me ;-)."
+
+            ],
+            happy: [
+                "Seeing You this happy is my favorite thing in the world۫  ꣑ৎ.",
+                "Your laugh is my favorite sound. Keep shining 𓂃⋆.˚.",
+                "I love Your happiness, but I love the way You share it with me even more.  ✦ ݁ ˖.",
+                "You have a beautiful soul and it radiates from You. It's truly a gift to be with You (❁´◡`❁).",
+                "Your joy is contagious, and I'm so lucky to be a part of it ㄟ(≧◇≦)ㄏ.",
+                "This is what I love to see. You are so full of life ^o^.",
+                "I'm so proud of all Your accomplishments, big and small 🙂‍↕️.",
+                "You deserve all the happiness in the world. I'm here to celebrate with You 🥹.",
+                "I love You, You happy goofball (*^▽^*)!",
+                "You are truly a light in my life, and I'm so glad You're glowing today 💡.",
+                "Today is a good day because You're having one ♪(^∇^*).",
+                "Your smile is my favorite kind of happiness. Keep shining, love ✨❤️!",
+                "Your happiness is my fav view and i never wanna look away 🫠.",
+                "Your smile just makes my day. Thank You for being You 🦢.",
+                "I feel so lucky to witness all Your joy ( *^-^)ρ(^0^* ).",
+                "You make the good days even better ✪ ω ✪.",
+                "You’re the brightest star in my sky, and seeing You happy makes it shine even more 💫.",
+                "When You’re happy, it’s like my heart does a little happy dance just for You 💃❤️.",
+                "You’ve filled my heart with so much joy, it feels like it might burst 💖.",
+                "I just wanted to say that You being happy makes me happy ヾ(^▽^*))).",
+                "I'm falling in love with You all over again just watching You light up 🙈.",
+                "Thank You for sharing Your happiness with me. It’s the best gift ʚɞ.",
+                "You are my sun on a happy day ☼."
+            ],
+            miss: [
+                "My heart is always with You no distance can change that 💕.",
+                "I carry You with me in every step, in every thought 🤌🏽.",
+                "In my heart You really never leave (Ps: there's no escape) ¯\_(ツ)_/¯.",
+                "Just wanted to let You know that I miss you more than words can say👉🏽👈🏽.",
+                "I keep replaying our happy moments together in my head. They're the best💭⊹ ࣪ ˖.",
+                "Even when we're apart, You're always with me. You're in my heart🫶🏽.",
+                "I miss Your laugh, Your hugs, and Your presence. All of it =D🫂.",
+                "My love for You wraps around You like a warm hug つ••)つ⊂(••⊂.",
+                "Distance means so little when someone means so much ♡.",
+                "Every inch of space between us only makes my love for you grow stronger 💓.",
+                "I feel You in every quiet moment 🍃.",
+                "The miles can’t measure the depth of my love for You 🛣️.",
+                "You never leave my mind ⸜(｡˃ ᵕ ˂ )⸝♡.",
+                "Every love song reminds me of You 😭.",
+                "There's a 'You-shaped' hole in my day when You're not here 🕳️.",
+                "I miss You, but I'm so grateful for every moment we have had and will have /(ㄒoㄒ)/~~.",
+                "Sending You a little piece of my heart, wrapped in all my love 🫀.",
+                "Just a little note to say You are loved and missed deeply 🗒️.",
+                "I wanna hold You in my arms 😭🫂.",
+                "Every minute without You is a minute too long ⌛.",
+                "I miss You and everything about You, especially the way you look at me 🫣.",
+                "My love, You're on my mind and in my dreams 🌀🛌🏽.",
+                "A part of me is always with You, no matter where You are..."
+            ],
+            love: [
+                "My love for You is a constant, a quiet strength I carry every day 🌷.",
+                "You are the missing piece I didn’t know I was looking for 🌻.",
+                "I fall in love with You a little more every single day 🌸.",
+                "You are my forever and always ♾️.",
+                "Our love story is my favorite story 🌼.",
+                "I love You not just for who You are, but for who I am when I'm with You 😌🌹.",
+                "No one comes close to how amazing You are 🥀.",
+                "My heart belongs to You completely and forever 🌺.",
+                "Loving You is the easiest, most natural thing in the world 🤭.",
+                "You are my home, my safe place, my everything 🫵🏽🌟.",
+                "With You, I've found a love deeper than I ever imagined 𐙚⋆°｡⋆♡.",
+                "You have my heart, my soul, and all my love ₍ᐢ. .ᐢ₎ ₊˚⊹♡.",
+                "Thank You for being the most incredible partner. I'm so lucky to have You ^3^.",
+                "You are the answer to every prayer I've ever made >ᴗ<.",
+                "To the world, You may be one person, but to me, You are the world 🌍✨",
+                "My love, You fill my life with so much light and laughter 𐔌՞. .՞𐦯.",
+                "I love You more than all the stars in the sky ⋆.˚☁️⋆.",
+                "Being in love with You is the most beautiful adventure ദ്ദി ˉ͈̀꒳ˉ͈́ )✧.",
+                "You are my greatest supporter and my biggest fan. I love You for that ◝(ᵔᗜᵔ)◜.",
+                "My love for You is unconditional and everlasting >⩊<.",
+                "You are my anchor in a stormy sea ⚓🌊.",
+                "Thank You for loving me exactly as I am 😝.",
+                "I love You to the moon and back honey 🪶📜🌕."
+            ]
+        };
+
+        function populateSections() {
+            const categories = {
+                down: "section-down",
+                happy: "section-happy",
+                miss: "section-miss",
+                love: "section-love"
+            };
+
+            for (const key in categories) {
+                const container = document.querySelector(`#${categories[key]} .section-content`);
+                if (container && messages[key]) {
+                    messages[key].forEach((message, index) => {
+                        const messageCard = document.createElement('div');
+                        messageCard.className = 'message-card';
+                        messageCard.innerHTML = `
+    <div class="card-inner">
+        <div class="message-front">
+            Message ${index + 1}
+        </div>
+        <div class="message-back">
+            <p>${message}</p>
+        </div>
+    </div>
+`;
+
+                        messageCard.onclick = function() {
+                            this.classList.toggle('flipped');
+                        };
+                        container.appendChild(messageCard);
+                    });
+                }
+            }
+        }
+
+        function toggleSection(sectionId) {
+            const sectionContent = document.querySelector(`#section-${sectionId} .section-content`);
+            if (sectionContent) {
+                sectionContent.classList.toggle('hidden');
+            }
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+            heart.style.opacity = Math.random();
+            heart.style.fontSize = Math.random() * 10 + 10 + 'px';
+            heart.style.transform = `translateY(0) rotate(${Math.random() * 360}deg)`;
+            document.getElementById('hearts-container').appendChild(heart);
+
+            heart.addEventListener('animationend', () => {
+                heart.remove();
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            populateSections();
+            document.querySelectorAll('.section-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            setInterval(createHeart, 300);
+        });
+    </script>
+</body>
+</html>
